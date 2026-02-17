@@ -16,8 +16,10 @@ services:
     environment:
       - NGINX_PORT=80
     networks:
-      - guminte-net
+      - universal
 
 networks:
-  guminte-net:
-    driver: bridge
+  # existing network
+  universal:
+    external: true
+    name: universal
