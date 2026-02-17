@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  guminte-landing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: guminte-landing-prod
+    restart: unless-stopped
+    ports:
+      - "8001:80"  # Exposing to host port 8080, Nginx listens on 80
+    volumes:
+      - ./images:/usr/share/nginx/html/images  # Mount images for easy updates without rebuild
+      - ./index.html:/usr/share/nginx/html/index.html # Mount index.html for easy updates
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf # Mount config for easy updates
+    environment:
+      - NGINX_PORT=80
+    networks:
+      - guminte-net
+
+networks:
+  guminte-net:
+    driver: bridge
